@@ -1,0 +1,55 @@
+# =========================
+# CORE NUMERICAL & DATA
+# =========================
+numpy==1.26.4
+pandas==2.2.2
+
+# =========================
+# IMAGE PROCESSING
+# =========================
+pillow==10.4.0
+opencv-python==4.10.0.84
+
+# =========================
+# DEEP LEARNING
+# =========================
+tensorflow==2.15.0
+scikit-learn==1.4.2
+
+# NOTE:
+# keras is bundled inside tensorflow>=2.15
+# Do NOT install keras separately
+
+# =========================
+# VISUALIZATION
+# =========================
+matplotlib==3.8.4
+seaborn==0.13.2
+
+# =========================
+# EXPERIMENT TRACKING
+# =========================
+wandb==0.17.7
+
+# =========================
+# STREAMLIT (DEPLOYMENT)
+# =========================
+streamlit==1.39.0
+
+# =========================
+# BACKEND / API (OPTIONAL - PHASE 2)
+# =========================
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic==2.9.2
+
+# =========================
+# LLM / EXTERNAL API
+# =========================
+requests==2.32.3
+
+# =========================
+# UTILITIES
+# =========================
+python-dotenv==1.0.1
+ipykernel==6.29.5

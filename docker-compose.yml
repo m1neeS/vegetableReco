@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  # Frontend - React application served by nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vege-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    networks:
+      - vege-network
+    restart: unless-stopped
+
+  # API Gateway - Node.js/Express
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: vege-api-gateway
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - ML_SERVICE_URL=http://ml-service:8000
+      - LLM_PROVIDER=${LLM_PROVIDER:-groq}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROQ_MODEL=${GROQ_MODEL:-llama-3.1-8b-instant}
+      - OLLAMA_URL=http://ollama:11434
+      - LLM_MODEL=llama3.2:1b
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/vegetable_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ml-service:
+        condition: service_healthy
+    networks:
+      - vege-network
+    restart: unless-stopped
+
+  # ML Service - FastAPI/Python
+  ml-service:
+    build:
+      context: ./ml-service
+      dockerfile: Dockerfile
+    container_name: vege-ml-service
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=/app/models/best_model.h5
+      - SAVED_MODEL_PATH=/app/models/saved_model
+    volumes:
+      - ./models:/app/models:ro
+    networks:
+      - vege-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: vege-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=vegetable_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - vege-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vegetable_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Ollama LLM Service
+  ollama:
+    image: ollama/ollama:latest
+    container_name: vege-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - vege-network
+    restart: unless-stopped
+    # Note: After first run, execute: docker exec -it vege-ollama ollama pull llama3
+
+networks:
+  vege-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  ollama_data:

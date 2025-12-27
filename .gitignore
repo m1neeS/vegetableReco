@@ -1,0 +1,101 @@
+# ===========================================
+# Python
+# ===========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.hypothesis/
+
+# ===========================================
+# Jupyter Notebook
+# ===========================================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ===========================================
+# IDE & Editor
+# ===========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-*
+
+# ===========================================
+# Environment Variables (IMPORTANT!)
+# ===========================================
+.env
+.env.local
+.env.production
+*.env
+!.env.example
+
+# ===========================================
+# Models (large files - download separately)
+# ===========================================
+models/*.h5
+models/*.keras
+models/saved_model/
+models/vegetable_classifier_saved/
+!models/.gitkeep
+
+# ===========================================
+# Dataset (large files - download separately)
+# ===========================================
+dataset/train/
+dataset/validation/
+dataset/test/
+!dataset/.gitkeep
+
+# ===========================================
+# Node.js
+# ===========================================
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# ===========================================
+# Frontend build
+# ===========================================
+frontend/dist/
+frontend/build/
+
+# ===========================================
+# Logs
+# ===========================================
+*.log
+logs/
+
+# ===========================================
+# OS Files
+# ===========================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===========================================
+# Weights & Biases (ML tracking)
+# ===========================================
+wandb/
+
+# ===========================================
+# Temporary files
+# ===========================================
+*.tmp
+*.temp
+*.bak
+
+# ===========================================
+# Kiro specs (optional - uncomment to exclude)
+# ===========================================
+# .kiro/

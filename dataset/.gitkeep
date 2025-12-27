@@ -1,0 +1,7 @@
+# Dataset folder
+# Download dataset from Kaggle: https://www.kaggle.com/datasets/misrakahmed/vegetable-image-dataset
+# Structure:
+# dataset/
+#   train/
+#   validation/
+#   test/

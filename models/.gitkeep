@@ -1,0 +1,6 @@
+# Models folder
+# Place your trained model here:
+# - best_model.h5 (required for inference)
+# 
+# Train your own model:
+# python -m training.train
