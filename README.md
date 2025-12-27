@@ -68,7 +68,7 @@ Aplikasi web untuk klasifikasi gambar sayuran menggunakan Deep Learning (MobileN
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/username/vegetable-recognition-app.git
+git clone https://github.com/m1neeS/vegetableReco.git
 cd vegetable-recognition-app
 ```
 
